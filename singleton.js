@@ -11,4 +11,4 @@ class Singleton {
   const instance1 = new Singleton();
   const instance2 = new Singleton();
   
-  console.log(instance1 == instance2);
+  console.log(instance1 === instance2); 
