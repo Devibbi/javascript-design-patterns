@@ -1,51 +1,34 @@
-class Employee {
-    constructor(name) {
-      this.name = name;
+class Subject {
+    constructor() {
+      this.observers = [];
     }
   
-    print() {
-      console.log(`Employee: ${this.name}`);
-    }
-  }
-  
-  // Composite
-  class Manager extends Employee {
-    constructor(name) {
-      super(name);
-      this.employees = [];
+    addObserver(observer) {
+      this.observers.push(observer);
     }
   
-    add(employee) {
-      this.employees.push(employee);
-    }
-  
-    remove(employee) {
-      const index = this.employees.indexOf(employee);
+    removeObserver(observer) {
+      const index = this.observers.indexOf(observer);
       if (index !== -1) {
-        this.employees.splice(index, 1);
+        this.observers.splice(index, 1);
       }
     }
   
-    print() {
-      console.log(`Manager: ${this.name}`);
-      for (const employee of this.employees) {
-        employee.print();
-      }
+    notifyObservers() {
+      this.observers.forEach((observer) => observer.update());
     }
   }
   
-  // Usage
-  const john = new Employee("John Doe");
-  const jane = new Employee("Jane Smith");
+  class Observer {
+    update() {
+      console.log("Observer is notified of changes.");
+    }
+  }
   
-  const mary = new Manager("Mary Johnson");
-  mary.add(john);
-  mary.add(jane);
+  const subject = new Subject();
+  const observer1 = new Observer();
+  const observer2 = new Observer();
   
-  const peter = new Employee("Peter Brown");
-  
-  const bob = new Manager("Bob Williams");
-  bob.add(peter);
-  bob.add(mary);
-  
-  bob.print();
+  subject.addObserver(observer1);
+  subject.addObserver(observer2);
+  subject.notifyObservers(); // Output: "Observer is notified of changes." "Observer is notified of changes."
